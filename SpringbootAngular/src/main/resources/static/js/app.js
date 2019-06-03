@@ -1,50 +1,10 @@
-var appCliente = angular.module("appCliente",[]);
+var appCliente = angular.module("appCliente",['ngRoute']);
 
-appCliente.controller("indexController",function($scope,$http){
-
-$scope.clientes=[];
-$scope.clientes={};
-
-$scope.carregarClientes= function(){
-$http({
-  method: 'GET',
-  url: 'http://localhost:8080/clientes'
-}).then(function(response) {
-    $scope.clientes=response.data;
-	console.log(response.status)
-  }, function (response) {
-    $scope.clientes=response.data;
-	console.log(response.status)
-  });
-};
-
-$scope.salvarClientes= function(){
-$http({
-  method: 'POST',
-  url: 'http://localhost:8080/clientes',
-  data:	cliente
-}).then(function(response) {
-    $scope.clientes=response.data;
-	console.log(response.status)
-  }, function (response) {
-    $scope.clientes=response.data;
-	console.log(response.status)
-  });
-};
-
-$scope.carregarClientes();
-$scope.salvarClientes();	 
-
-
-
-
-
-
-
-
-
-
-
-
+appCliente.config(function($routeProvider,$locationProvider){
+$routeProvider
+.when("/clientes",{templateUrl:'view/cliente.html', controller:'clienteController'})
+.when("/cidades",{templateUrl:'view/cidade.html', controller:'cidadeController'})
+.when("/estados",{templateUrl:'view/estado.html', controller:'estadoController'})
+.otherwise({redirectTo:'/'});
+$locationProvider.html5Mode(true);
 });
-
